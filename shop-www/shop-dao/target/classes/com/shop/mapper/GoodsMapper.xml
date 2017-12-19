@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.shop.dao.GoodsDao" >
+
+    <select id="showDesignerGoods" resultType="com.shop.query.GoodsQuery" >
+       SELECT
+	g.id,
+	g.image,
+	g.name,
+	g.caption,
+	g.is_custom,
+	g.price,
+	g.sales FROM dm_goods g
+  LEFT JOIN dm_gd gd ON g.id = gd.goods
+  LEFT JOIN dm_designer d ON d.id = gd.designers
+  WHERE
+	g.version = 1
+    AND d.id = #{id}
+
+
+    </select>
+
+
+
+	<select id="showBrandDetail" resultType="com.shop.query.GoodsQuery" >
+		SELECT
+		g.id,
+		g.image,
+		g.name,
+		g.caption,
+		g.is_custom,
+		g.price,
+		g.sales FROM dm_goods g
+		LEFT JOIN dm_gb gb ON g.id = gb.goods
+		LEFT JOIN dm_brand b ON b.id = gb.brands
+		WHERE
+		g.version = 1
+		AND b.id = #{id}
+
+
+	</select>
+
+	<select id="findBProductById" resultType="com.shop.model.Goods" >
+		SELECT
+		g.id,
+	    g.product_info,
+	    g.product_image_top,
+		g.product_image_bottom,
+		g.material_detail,
+		g.price,
+		g.sales,
+		g.introduction,
+		g.product_introduction,
+		g.is_custom,
+		b.name,
+		g.product_category
+	FROM
+		dm_goods g
+	LEFT JOIN dm_gb gb ON gb.goods = g.id
+	LEFT JOIN dm_brand b ON b.id = gb.brands
+	WHERE g.type=1 and g.id=#{id}
+
+	</select>
+
+	<select id="findDProductById" resultType="com.shop.model.Goods" >
+		 SELECT
+		 g.id,
+		g.product_info,
+		g.price,
+		g.sales,
+		g.product_image_top,
+		g.product_image_bottom,
+		g.material_detail,
+		g.introduction,
+		g.product_introduction,
+		g.is_custom,
+		d.name,
+		g.product_category
+	FROM
+		dm_goods g
+	LEFT JOIN dm_gd gd ON gd.goods = g.id
+	LEFT JOIN dm_designer d ON d.id = gd.designers
+	WHERE g.id=#{id} AND g.type=2
+
+
+	</select>
+
+	<select id="queryProductByGoodsDto" resultType="com.shop.model.Goods" >
+		SELECT
+			id,
+			image,
+			NAME,
+			caption,
+			is_custom,
+			price,
+			sales
+		FROM
+			dm_goods
+		WHERE
+			version = 1
+		<if test="@Ognl@isNotEmpty(gender)" >
+			AND gender = #{gender}
+		</if>
+		<if test="@Ognl@isNotEmpty(scene)" >
+			AND product_scene = #{scene}
+		</if>
+		<if test="@Ognl@isNotEmpty(category)" >
+			AND product_category = #{category}
+		</if>
+		<if test="@Ognl@isNotEmpty(season)" >
+			AND product_season= #{season}
+		</if>
+		<if test="@Ognl@isNotEmpty(startPrice)" >
+			AND price >= #{startPrice}
+		</if>
+		<if test="@Ognl@isNotEmpty(endPrice)" >
+			AND price &lt;= #{endPrice}
+		</if>
+
+	</select>
+
+</mapper>

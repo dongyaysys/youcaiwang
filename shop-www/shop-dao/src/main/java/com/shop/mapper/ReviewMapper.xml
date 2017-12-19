@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.shop.dao.ReviewDao" >
+
+    <select id="queryReviews" resultType="com.shop.query.ReviewQuery" >
+       SELECT
+	  u.avatar,
+	  IFNULL(u.nickname, u.mobile) nickname,
+	  r.id,
+	  r.content,
+	  r.review_pic1,
+	  r.review_pic2,
+	  r.review_pic3,
+	  r.likecount,
+	  r.is_like
+  FROM
+	  dm_user u
+  LEFT JOIN dm_review r ON u.user_id = r.member
+  WHERE
+	  r.version = 1
+        <if test="@Ognl@isNotEmpty(isShow)" >
+            AND r.is_show = #{isShow}
+        </if>
+        <if test="@Ognl@isNotEmpty(goods)" >
+            AND r.goods = #{goods}
+        </if>
+
+    </select>
+
+
+</mapper>

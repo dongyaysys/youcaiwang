@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.shop.dao.DesignerDao" >
+
+    <select id="showPopularDesignders" resultType="com.shop.query.DesignerQuery" >
+               SELECT
+            id,
+            recent_image
+        FROM
+            dm_designer
+        WHERE
+            id = ANY (
+                SELECT
+                    t.id
+                FROM
+                    (
+                        SELECT
+                            d.id
+                        FROM
+                            dm_goods g
+                        LEFT JOIN dm_gd gd ON g.id = gd.goods
+                        LEFT JOIN dm_designer d ON d.id = gd.designers
+                        WHERE
+                            g.version = 1
+                        AND g.type = 2
+                        ORDER BY
+                            g.sales DESC
+                        LIMIT 5
+                    ) AS t
+            );
+
+    </select>
+
+
+</mapper>
