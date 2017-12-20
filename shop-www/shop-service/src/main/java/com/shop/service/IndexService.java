@@ -129,7 +129,7 @@ public class IndexService {
         }
 
         List<ProductScene> sceneList=goodsService.queryProductScene(goodsDto.getGender());
-        List<ProductCategory> productCategory=goodsService.queryProductCategory(goodsDto.getGender());
+        List<ProductCategory> productCategory=goodsService.queryProductCategoryByGender(goodsDto.getGender());
 
         // 構建pageBounds
         PageBounds pageBounds = goodsDto.buildPageBounds();

@@ -83,8 +83,10 @@ public class Goods extends BaseModel implements Serializable {
 
     //商品尺寸
     private List<Size> size;
+
+
     //商品面料
-    private List<Material> material;
+   private List<Material> material;
 
 
 

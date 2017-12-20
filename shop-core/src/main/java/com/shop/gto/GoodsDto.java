@@ -20,5 +20,7 @@ public class GoodsDto extends BaseDto {
     private Integer category;
     private Integer season;
     private Integer gender;
+    private Integer size;
+    private Integer material;
 
 }

@@ -3,6 +3,7 @@ package com.shop.controller;
 import com.shop.base.BaseModel;
 import com.shop.constant.DmConstant;
 import com.shop.constant.MessageModel;
+import com.shop.gto.GoodsDto;
 import com.shop.service.DesignerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +34,11 @@ public class DesignerController  extends BaseModel implements Serializable{
      */
     @RequestMapping("showDesignerDetail")
     @ResponseBody
-    public MessageModel showDesignerDetail(Integer id){
+    public MessageModel showDesignerDetail(Integer id, GoodsDto goodsDto){
         MessageModel messageModel=new MessageModel();
         Map<Object,Object> map= new HashMap<Object,Object>();
 
-        map=designerService.showDesignerDetail(id);
+        map=designerService.showDesignerDetail(id,goodsDto);
         messageModel.setData(map);
         messageModel.setCode(DmConstant.opscode(map));
         messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);

@@ -7,7 +7,6 @@ import com.shop.gto.GoodsDto;
 import com.shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import scala.Serializable;
@@ -40,9 +39,9 @@ public class ShowController extends BaseModel implements Serializable {
 
         map=indexService.recommendShow();
 
-        messageModel.setCode(DmConstant.opscode(map));
         messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
         messageModel.setData(map);
+        messageModel.setCode(DmConstant.opscode(map));
 
 
         return messageModel;
@@ -72,9 +71,9 @@ public class ShowController extends BaseModel implements Serializable {
   *@create 2017/12/13 10:31
   *选衣--男装女装接口
   */
-    @RequestMapping("chooseChose")
+    @RequestMapping("chooseClose")
     @ResponseBody
-    public MessageModel chooseShow(GoodsDto goodsDto){
+    public MessageModel chooseClose(GoodsDto goodsDto){
         MessageModel messageModel=new MessageModel();
         Map<Object,Object> map= new HashMap<Object,Object>();
 
@@ -85,6 +84,8 @@ public class ShowController extends BaseModel implements Serializable {
         return messageModel;
 
     }
+
+
 
   /**
   *@author DY

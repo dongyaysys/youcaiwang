@@ -19,5 +19,8 @@ public class Material implements Serializable {
     //商品尺寸名称
     private String material;
 
+    //商品库存
+    private Integer stock;
+
 
 }

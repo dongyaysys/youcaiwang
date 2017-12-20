@@ -32,9 +32,6 @@ public class AttendService {
         if(user==null){
             throw new ParamException("查询不到此用户");
         }
-        if(!user.getIsLogin()){
-            throw new ParamException("请登录之后再关注");
-        }
 
         AssertUtil.intIsNotEmpty(attend,"请选择要关注的设计师或者品牌");
         AssertUtil.intIsNotEmpty(type,"请选择关注类型");
@@ -68,10 +65,6 @@ public class AttendService {
         if(user==null){
             throw new ParamException("查询不到此用户");
         }
-        if(!user.getIsLogin()){
-            throw new ParamException("请登录之后再收藏");
-        }
-
         AssertUtil.intIsNotEmpty(goodsId,"请选择要收藏的商品");
         Integer code=attendDao.findIsCollectionById(userId,goodsId);
         Boolean isCollection=null;

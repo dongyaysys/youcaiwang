@@ -1,5 +1,6 @@
 package com.shop.exception;
 
+import com.shop.constant.MessageModel;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,12 +19,12 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ParamException.class)
     @ResponseBody
-    public ResultInfo handlerParam(ParamException exception) {
-        ResultInfo resultInfo = new ResultInfo();
-        resultInfo.setResultMessage(exception.getMessage());
-        resultInfo.setResult(exception.getMessage());
-        resultInfo.setResultCode(exception.getErrorCode());
-        return resultInfo;
+    public MessageModel handlerParam(ParamException exception) {
+        MessageModel messageModel = new MessageModel();
+        messageModel.setMsg(exception.getMessage());
+        messageModel.setData(exception.getMessage());
+        messageModel.setCode(exception.getErrorCode());
+        return messageModel;
     }
 
 }

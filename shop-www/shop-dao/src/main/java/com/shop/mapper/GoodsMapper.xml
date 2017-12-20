@@ -4,6 +4,7 @@
 
 <mapper namespace="com.shop.dao.GoodsDao" >
 
+	<!--查看设计师下的商品-->
     <select id="showDesignerGoods" resultType="com.shop.query.GoodsQuery" >
        SELECT
 	g.id,
@@ -12,6 +13,7 @@
 	g.caption,
 	g.is_custom,
 	g.price,
+	g.product_category,
 	g.sales FROM dm_goods g
   LEFT JOIN dm_gd gd ON g.id = gd.goods
   LEFT JOIN dm_designer d ON d.id = gd.designers
@@ -23,7 +25,7 @@
     </select>
 
 
-
+	<!--查看品牌下的商品-->
 	<select id="showBrandDetail" resultType="com.shop.query.GoodsQuery" >
 		SELECT
 		g.id,
@@ -32,6 +34,7 @@
 		g.caption,
 		g.is_custom,
 		g.price,
+		g.product_category,
 		g.sales FROM dm_goods g
 		LEFT JOIN dm_gb gb ON g.id = gb.goods
 		LEFT JOIN dm_brand b ON b.id = gb.brands
@@ -41,7 +44,7 @@
 
 
 	</select>
-
+	<!--查看详情商品信息及品牌信息-->
 	<select id="findBProductById" resultType="com.shop.model.Goods" >
 		SELECT
 		g.id,
@@ -63,7 +66,7 @@
 	WHERE g.type=1 and g.id=#{id}
 
 	</select>
-
+	<!--查看详情商品信息及设计师信息-->
 	<select id="findDProductById" resultType="com.shop.model.Goods" >
 		 SELECT
 		 g.id,
@@ -120,5 +123,57 @@
 		</if>
 
 	</select>
+
+
+
+
+	<select id="queryProductSize" resultType="com.shop.model.Size" >
+
+		SELECT
+		id,
+		size
+		FROM
+		dm_size
+		WHERE
+		id = ANY (
+		SELECT
+		s.id
+		FROM
+		dm_product p
+		LEFT JOIN dm_size s ON s.id = p.size
+		WHERE
+		p.goods = #{goods}
+		<if test="@Ognl@isNotEmpty(material)" >
+			AND p.material = #{material}
+		</if>
+		<if test="@Ognl@isNotEmpty(size)" >
+			AND p.size = #{size}
+		</if>
+		)
+
+
+	</select>
+
+	<select id="queryProductMaterial" resultType="com.shop.model.Material" >
+		SELECT DISTINCT
+		m.id,
+		m.material,
+		p.price,
+		p.stock
+		FROM
+		dm_product p
+		LEFT JOIN dm_material m ON m.id = p.material
+		WHERE
+		p.goods = #{goods}
+		<if test="@Ognl@isNotEmpty(size)" >
+			AND p.size = #{size}
+		</if>
+		<if test="@Ognl@isNotEmpty(material)" >
+			AND p.material = #{material}
+		</if>
+
+
+	</select>
+
 
 </mapper>

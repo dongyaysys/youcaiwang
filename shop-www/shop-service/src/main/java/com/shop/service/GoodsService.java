@@ -54,10 +54,10 @@ public class GoodsService {
     *@create 2017/12/13 13:55
     *根据衣服种类进行分类
     */
-    public List<ProductCategory> queryProductCategory(Integer gender){
+    public List<ProductCategory> queryProductCategoryByGender(Integer gender){
         List<ProductCategory> productCategory=new ArrayList();
 
-        productCategory=goodsDao.queryProductSceneByGender(gender);
+        productCategory=goodsDao.queryProductCategoryByGender(gender);
 
         return productCategory;
 

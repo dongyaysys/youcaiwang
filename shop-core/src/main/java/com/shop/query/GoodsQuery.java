@@ -28,6 +28,8 @@ public class GoodsQuery extends BaseModel implements Serializable {
 
     //是否上架 1代表上架 0代表下架
     private Boolean isMarkettable;
+    //商品所属类别
+    private Integer productCategory;
 
 
 

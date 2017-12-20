@@ -13,9 +13,11 @@ import com.shop.model.Goods;
 import com.shop.model.Material;
 import com.shop.model.Size;
 import com.shop.query.ReviewQuery;
+import com.shop.util.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +59,8 @@ public class ProductService {
         Paginator paginator= reviewsPageList.getPaginator();
         map.put("paginator", paginator);
 
-        List<Size> productSize=goodsDao.queryProductSizeById(id);
-        List<Material> productMaterial=goodsDao.queryProductMaterialById(id);
+        List<Size> productSize=goodsDao.queryProductSize(goodsDto);
+        List<Material> productMaterial=goodsDao.queryProductMaterial(goodsDto);
 
         Goods goods=new Goods();
         String productCategoryName=goodsDao.findProductCategoryById(id);
@@ -77,12 +79,41 @@ public class ProductService {
         goods.setProductCategory(productCategoryName);
         goods.setSize(productSize);
         goods.setMaterial(productMaterial);
-
-        map.put("reviews",reviews);
+        map.put("reviews",reviewsPageList);
         map.put("goods",goods);
+        return map;
+    }
+
+    /**
+    *@author DY
+    *@create 2017/12/20 13:57
+    *选择商品尺寸接口,非定制类,套码
+    */
+
+    public Map<Object,Object> chooseProduct(GoodsDto goodsDto) {
+        Map<Object,Object> map= new HashMap<Object,Object>();
+        AssertUtil.intIsNotEmpty(goodsDto.getGoods(),"请选择商品");
+
+        List<Size> size=new ArrayList<>();
+        List<Material> material=new ArrayList<>();
+        if(null==goodsDto.getMaterial()&&null==goodsDto.getSize()){
+            throw new ParamException("请选择尺码或者颜色");
+        }
+
+        if(goodsDto.getSize()!=null&&null==goodsDto.getMaterial()){
+             material=goodsDao.queryProductMaterial(goodsDto);
+             map.put("material",material);
+        }
+        if(goodsDto.getSize()==null&&null!=goodsDto.getMaterial()){
+             size=goodsDao.queryProductSize(goodsDto);
+             map.put("size",size);
+        }
+
+
         return map;
 
 
-
     }
+
+
 }
