@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Setter
 @Getter
-public class ReviewQuery extends BaseModel implements Serializable {
+public class ReviewQuery extends BaseModel  {
 
     private Integer member;
     //评论内容

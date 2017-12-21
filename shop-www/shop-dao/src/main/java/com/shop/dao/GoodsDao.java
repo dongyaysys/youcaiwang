@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface GoodsDao {
 
-    @Select("select id,image,name,caption,is_custom,price,sales from dm_goods where version=1 ")
+    @Select("select id,create_date,modify_date,image,name,caption,is_custom,price,sales from dm_goods where version=1 ")
     public List<GoodsQuery> queryGoods();
 
 
@@ -22,10 +22,10 @@ public interface GoodsDao {
     public List<ProductScene> querySceneByGender(@Param("gender") Integer gender);
 
 
-    @Select("select id, product_category from dm_goods_category where gender=#{gender} ")
+    @Select("select id, category_name from dm_goods_category where gender=#{gender} ")
     public List<ProductCategory> queryProductCategoryByGender(@Param("gender") Integer gender);
 
-    @Select("select id,product_category from dm_goods_category where id=#{category} ")
+    @Select("select id,category_name from dm_goods_category where id=#{category} ")
     ProductCategory queryProductCategoryById(@Param("category") Integer category);
 
 
@@ -43,7 +43,7 @@ public interface GoodsDao {
 
     Goods findDProductById(Integer id);
 
-    @Select("select product_category from dm_goods_category where id=(select product_category from dm_goods where id=#{id})")
+    @Select("select category_name from dm_goods_category where id=(select product_category from dm_goods where id=#{id})")
     String findProductCategoryById(@Param("id") Integer id);
 
 
@@ -53,4 +53,5 @@ public interface GoodsDao {
     List<Material> queryProductMaterial(GoodsDto goodsDto);
 
 
+    List<GoodsQuery> selectProductForPage(GoodsDto goodsDto, PageBounds pageBounds);
 }

@@ -13,19 +13,19 @@ import java.util.List;
  */
 public interface BrandDao {
 
-    @Select("select id,name,image,brand_top,brand_centre,brand_bottom from dm_brand where is_selection=1 and version=1")
+    @Select("select id,create_date,modify_date,name,image,brand_top,brand_centre,brand_bottom from dm_brand where is_selection=1 and version=1")
     public List<BrandQuery> showHotBrands();
 
-    @Select("SELECT id,recent_image FROM dm_brand where version=1 ORDER BY create_date desc limit 5")
+    @Select("SELECT id,create_date,modify_date,recent_image FROM dm_brand where version=1 ORDER BY create_date desc limit 5")
     public List<BrandQuery> showRecentBrands();
 
     public List<BrandQuery> showPopularBrand();
 
-    @Select("select id,name,image_detail,introduction from dm_brand where id=#{id} and version=1")
+    @Select("select id,name,create_date,modify_date,image_detail,introduction from dm_brand where id=#{id} and version=1")
     public Brand showBrandDetail(@Param("id") Integer id);
 
 
-    @Select("select id,heading,name,fristPinyin(name) as fristPinyin from dm_brand where version=1 ORDER BY fristPinyin")
+    @Select("select id,create_date,modify_date,heading,name,fristPinyin(name) as fristPinyin from dm_brand where version=1 ORDER BY fristPinyin")
     List<BrandQuery> queryBrandDesignersByName();
 
 

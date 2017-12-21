@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class Brand extends BaseModel implements Serializable {
+public class Brand extends BaseModel  {
     //品牌名称
     private String name;
     //品牌头像

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Setter
 @Getter
-public class Goods extends BaseModel implements Serializable {
+public class Goods extends BaseModel {
    /* //所属品牌
     private Integer brands;
     //所属设计师

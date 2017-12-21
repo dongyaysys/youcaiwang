@@ -16,7 +16,7 @@ public class ProductCategory  implements Serializable {
 
     private Integer id;
     //按男女装分类
-    private String productCategory;
+    private String categoryName;
 
 
 }

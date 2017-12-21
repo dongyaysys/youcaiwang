@@ -24,7 +24,7 @@ public class AttendService {
     private UserDao userDao;
 
 
-    public MessageModel attendDesignerOrBrand(Integer userId,Integer attend,Integer type) {
+    public MessageModel attendDesignerOrBrand(Integer userId,Integer attend,Integer click,Integer type) {
         MessageModel messageModel=new MessageModel();
 
         AssertUtil.intIsNotEmpty(userId,"请选择用户");
@@ -37,27 +37,38 @@ public class AttendService {
         AssertUtil.intIsNotEmpty(type,"请选择关注类型");
         Integer code=attendDao.findIsAttendById(userId,attend,type);
         Boolean isAttend=null;
-        //判断此用户是否点赞,true代表点赞
-        if(null==code||code<1){
-            isAttend=true;
-            Integer insertCode=attendDao.insertAttend(userId,attend,type);
-           AssertUtil.intIsNotEmpty(insertCode,"关注失败");
-           messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
-           messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+        if(null==click||click<1){
+            if(null==code||code<1){
+                isAttend=false;
+            }
+            else{
+                isAttend=true;
+            }
+
         }
         else{
-            isAttend=false;
-            Integer deleteCode=attendDao.deleteAttend(userId,attend,type);
-            AssertUtil.intIsNotEmpty(deleteCode,"取消失败");
-            messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
-            messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+            //判断此用户是否点赞,true代表点赞
+            if(null==code||code<1){
+                isAttend=true;
+                Integer insertCode=attendDao.insertAttend(userId,attend,type);
+                AssertUtil.intIsNotEmpty(insertCode,"关注失败");
+                messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
+                messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+            }
+            else{
+                isAttend=false;
+                Integer deleteCode=attendDao.deleteAttend(userId,attend,type);
+                AssertUtil.intIsNotEmpty(deleteCode,"取消失败");
+                messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
+                messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+            }
         }
 
             messageModel.setData(isAttend);
             return messageModel;
     }
 
-    public MessageModel collectionGoods(Integer userId, Integer goodsId) {
+    public MessageModel collectionGoods(Integer userId, Integer goodsId,Integer click) {
         MessageModel messageModel=new MessageModel();
 
         AssertUtil.intIsNotEmpty(userId,"请选择用户");
@@ -69,19 +80,33 @@ public class AttendService {
         Integer code=attendDao.findIsCollectionById(userId,goodsId);
         Boolean isCollection=null;
         //判断此用户是否点赞,true代表点赞
-        if(null==code||code<1){
-            isCollection=true;
-            Integer insertCode=attendDao.insertCollection(userId,goodsId);
-            AssertUtil.intIsNotEmpty(insertCode,"收藏失败");
-            messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
-            messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+
+        if(null==click||click<1){
+            if(null==code||code<1){
+                isCollection=false;
+            }
+            else{
+                isCollection=true;
+            }
+
         }
+
         else{
-            isCollection=false;
-            Integer deleteCode=attendDao.deleteCollection(userId,goodsId);
-            AssertUtil.intIsNotEmpty(deleteCode,"取消收藏失败");
-            messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
-            messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+
+            if(null==code||code<1){
+                isCollection=true;
+                Integer insertCode=attendDao.insertCollection(userId,goodsId);
+                AssertUtil.intIsNotEmpty(insertCode,"收藏失败");
+                messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
+                messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+            }
+            else{
+                isCollection=false;
+                Integer deleteCode=attendDao.deleteCollection(userId,goodsId);
+                AssertUtil.intIsNotEmpty(deleteCode,"取消收藏失败");
+                messageModel.setCode(DmConstant.OPS_SUCCESS_CODE);
+                messageModel.setMsg(DmConstant.OPS_SUCCESS_MSG);
+            }
         }
 
         messageModel.setData(isCollection);

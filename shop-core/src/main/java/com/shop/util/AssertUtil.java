@@ -4,6 +4,8 @@ import com.shop.constant.Constant;
 import com.shop.exception.ParamException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class AssertUtil {
 	
 	/**
@@ -81,6 +83,7 @@ public class AssertUtil {
 		}
 		return msg;
 	}
+
 	
 	
 }

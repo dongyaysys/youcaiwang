@@ -16,7 +16,7 @@ public class DmConstant {
 
 	public static Integer opscode(Map map){
 
-		if(map.size()==0){
+		if(null==map||map.size()==0){
 			return OPS_SUCCESS_CODE_NULL;
 		}
 		else {

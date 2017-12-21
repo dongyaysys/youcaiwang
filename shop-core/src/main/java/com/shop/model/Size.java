@@ -20,9 +20,7 @@ public class Size  implements Serializable {
 
     //商品尺寸名称
     private String size;
-    
-    //面料
-    private List<Material> materialList;
+
 
     ;
 

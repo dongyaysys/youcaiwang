@@ -96,7 +96,6 @@ public class BrandService {
         map.put("paginator", paginator);
         map.put("brand",brand);
         map.put("goods",brandPageList);
-
         return map;
 
     }

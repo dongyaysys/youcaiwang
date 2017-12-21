@@ -10,6 +10,8 @@
 	g.id,
 	g.image,
 	g.name,
+	g.create_date,
+	g.modify_date,
 	g.caption,
 	g.is_custom,
 	g.price,
@@ -31,6 +33,8 @@
 		g.id,
 		g.image,
 		g.name,
+		g.create_date,
+		g.modify_date,
 		g.caption,
 		g.is_custom,
 		g.price,
@@ -48,6 +52,8 @@
 	<select id="findBProductById" resultType="com.shop.model.Goods" >
 		SELECT
 		g.id,
+		g.create_date,
+		g.modify_date,
 	    g.product_info,
 	    g.product_image_top,
 		g.product_image_bottom,
@@ -73,6 +79,8 @@
 		g.product_info,
 		g.price,
 		g.sales,
+		g.create_date,
+		g.modify_date,
 		g.product_image_top,
 		g.product_image_bottom,
 		g.material_detail,
@@ -172,6 +180,39 @@
 			AND p.material = #{material}
 		</if>
 
+
+	</select>
+
+
+	<select id="selectProductForPage" resultType="com.shop.query.GoodsQuery" >
+		SELECT
+		id,
+		image,
+		NAME,
+		caption,
+		is_custom,
+		price,
+		sales,
+		introduction,
+		create_date,
+		modify_date
+		FROM
+		dm_goods
+		WHERE
+		is_marketable = 1 AND version=1
+		<if test="@Ognl@isNotEmpty(keyword)" >
+			AND (name like '%${keyword}%'
+			or keyword LIKE '%${keyword}%'
+			or caption LIKE '%${keyword}%'
+			or introduction LIKE '%${keyword}%'
+			)
+		</if>
+		<if test="@Ognl@isNotEmpty(startPrice)" >
+			AND price >= #{startPrice}
+		</if>
+		<if test="@Ognl@isNotEmpty(endPrice)" >
+			AND price &lt;= #{endPrice}
+		</if>
 
 	</select>
 

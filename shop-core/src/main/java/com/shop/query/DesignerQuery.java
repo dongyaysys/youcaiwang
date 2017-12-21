@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class DesignerQuery  implements Serializable {
+public class DesignerQuery extends BaseModel {
     private Integer id;
     //设计师名称
     private String name;

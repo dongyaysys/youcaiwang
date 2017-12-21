@@ -7,6 +7,8 @@
     <select id="showPopularDesignders" resultType="com.shop.query.DesignerQuery" >
                SELECT
             id,
+            create_date,
+	        modify_date,
             recent_image
         FROM
             dm_designer

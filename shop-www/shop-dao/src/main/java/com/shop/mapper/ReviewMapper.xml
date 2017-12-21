@@ -10,6 +10,8 @@
 	  IFNULL(u.nickname, u.mobile) nickname,
 	  r.id,
 	  r.content,
+      r.create_date,
+      r.modify_date,
 	  r.review_pic1,
 	  r.review_pic2,
 	  r.review_pic3,

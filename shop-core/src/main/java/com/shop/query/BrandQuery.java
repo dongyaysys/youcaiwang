@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class BrandQuery  implements Serializable {
+public class BrandQuery extends BaseModel  {
 
     private Integer id;
     //品牌名称

@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class Review extends BaseModel implements Serializable {
+public class Review extends BaseModel  {
 
     //评论商品
     private Integer goods;

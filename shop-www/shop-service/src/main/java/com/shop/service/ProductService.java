@@ -9,9 +9,8 @@ import com.github.miemiedev.mybatis.paginator.domain.Paginator;
 import com.shop.dao.GoodsDao;
 import com.shop.exception.ParamException;
 import com.shop.gto.GoodsDto;
-import com.shop.model.Goods;
-import com.shop.model.Material;
-import com.shop.model.Size;
+import com.shop.model.*;
+import com.shop.query.GoodsQuery;
 import com.shop.query.ReviewQuery;
 import com.shop.util.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +80,9 @@ public class ProductService {
         goods.setMaterial(productMaterial);
         map.put("reviews",reviewsPageList);
         map.put("goods",goods);
+        if(0==paginator.getTotalCount()){
+            map=null;
+        }
         return map;
     }
 
@@ -94,8 +96,8 @@ public class ProductService {
         Map<Object,Object> map= new HashMap<Object,Object>();
         AssertUtil.intIsNotEmpty(goodsDto.getGoods(),"请选择商品");
 
-        List<Size> size=new ArrayList<>();
-        List<Material> material=new ArrayList<>();
+        List<Size> size=null;
+        List<Material> material=null;
         if(null==goodsDto.getMaterial()&&null==goodsDto.getSize()){
             throw new ParamException("请选择尺码或者颜色");
         }
@@ -108,7 +110,9 @@ public class ProductService {
              size=goodsDao.queryProductSize(goodsDto);
              map.put("size",size);
         }
-
+        if(null==material&&0==size.size()||null==size&&0==material.size()){
+            map=null;
+        }
 
         return map;
 
@@ -116,4 +120,25 @@ public class ProductService {
     }
 
 
+    public Map<Object,Object> selectProductForPage(GoodsDto goodsDto) {
+
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        AssertUtil.notNull(goodsDto,"请输入搜索内容");
+        // 構建pageBounds
+        PageBounds pageBounds = goodsDto.buildPageBounds();
+        // 調用查詢語句
+        List<GoodsQuery> goods=goodsDao.selectProductForPage(goodsDto,pageBounds);
+
+        // 構建返回結果
+        PageList<GoodsQuery> goodsPageList = (PageList<GoodsQuery>)goods;
+
+        //構建paginator對象返回
+        Paginator paginator= goodsPageList.getPaginator();
+        map.put("goods",goodsPageList);
+        map.put("paginator", paginator);
+        if(0==paginator.getTotalCount()){
+            map=null;
+        }
+        return map;
+    }
 }

@@ -90,7 +90,9 @@ public class IndexService {
         map.put("paginator", paginator);
 
         map.put("reviews",reviewsPageList);
-
+        if(0==paginator.getTotalCount()){
+            map=null;
+        }
         return map;
 
     }

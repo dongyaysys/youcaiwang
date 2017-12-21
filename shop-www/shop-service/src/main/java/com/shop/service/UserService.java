@@ -9,10 +9,6 @@ import com.shop.util.AssertUtil;
 import com.shop.util.MobileUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.data.redis.core.BoundValueOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
@@ -70,16 +66,16 @@ public class UserService {
         Jedis jedis=new Jedis(JedisConstant.JEDISHOST, JedisConstant.JEDISPORT);
         jedis.auth(JedisConstant.POSSWORD);
 
-        mobile= MobileUtil.returnNewMobile(mobile);
+        String newMobile= MobileUtil.returnNewMobile(mobile);
         //构建token之前判断是否有token存在
-        String token=jedis.get(mobile);
+        String token=jedis.get(newMobile);
         if(null!=token){
             jedis.del(token);
         }
 
         String value=DigestUtils.md5Hex(UUID.randomUUID().toString().getBytes());
-                jedis.set(mobile,value);
-                jedis.expire(mobile,300);
+                jedis.set(newMobile,value);
+                jedis.expire(newMobile,300);
                 map.put(mobile,value);
                 messageModel.setData(map);
                 return messageModel;

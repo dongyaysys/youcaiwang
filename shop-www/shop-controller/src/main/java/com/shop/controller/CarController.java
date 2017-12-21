@@ -28,7 +28,7 @@ public class CarController {
     *@create 2017/12/19 14:18
     *加入购物车,判断是否为定制类产品,定制类不判断库存
     */
-   @RequestMapping("add")
+   @RequestMapping("choseSizeOrMaterial")
     @ResponseBody
     public MessageModel addProductCar(GoodsDto goodsDto){
 

@@ -34,27 +34,27 @@ public class AttendController extends BaseModel implements Serializable{
 
     @RequestMapping("attendDesignerOrBrand")
     @ResponseBody
-    public MessageModel attendDesignerOrBrand(Integer userId,Integer attend,Integer type,Token token){
+    public MessageModel attendDesignerOrBrand(Integer userId,Integer attend,Integer type,Integer click,Token token){
 
-        Boolean isLogin=IsLogin.isLogin(token);
-        AssertUtil.isTrue(!isLogin,"异常访问");
+        //Boolean isLogin=IsLogin.isLogin(token);
+        //AssertUtil.isTrue(!isLogin,"异常访问");
         MessageModel messageMode=new MessageModel();
         Map<Object,Object> map= new HashMap<Object,Object>();
 
-        MessageModel messageModel=attendService.attendDesignerOrBrand(userId,attend,type);
+        MessageModel messageModel=attendService.attendDesignerOrBrand(userId,attend,click,type);
         return messageModel;
 
     }
 
     @RequestMapping("collectionProduct")
     @ResponseBody
-    public MessageModel collectionProduct(Integer userId,Integer goodsId,Token token){
-        Boolean isLogin=IsLogin.isLogin(token);
-        AssertUtil.isTrue(!isLogin,"异常访问");
+    public MessageModel collectionProduct(Integer userId,Integer goodsId,Integer click,Token token){
+        //Boolean isLogin=IsLogin.isLogin(token);
+        //AssertUtil.isTrue(!isLogin,"异常访问");
         MessageModel messageMode=new MessageModel();
         Map<Object,Object> map= new HashMap<Object,Object>();
 
-        MessageModel messageModel=attendService.collectionGoods(userId,goodsId);
+        MessageModel messageModel=attendService.collectionGoods(userId,goodsId,click);
         return messageModel;
 
     }
